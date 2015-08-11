@@ -8,8 +8,22 @@ Requirements:
 
 ## Installation
 * git clone https://github.com/bradjbarnes/ecspytest.git
+* cd ecspytest
+* virtualenv -p /usr/bin/python2.7 venv
+* source venv/bin/activate
 * pip install < requirements.txt
 
 ## Usage
 
 
+* Add your ECS credentials to env variabls AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+* 
+```
+AWS_ACCESS_KEY_ID=<your access key ID>; AWS_SECRET_ACCESS_KEY=<your secret key>;
+echo $AWS_ACCESS_KEY_ID; echo $AWS_SECRET_ACCESS_KEY
+``` 
+* customize some of the bucket names, object keys and contents  
+* run 
+``` 
+python ecspytest.py
+```
