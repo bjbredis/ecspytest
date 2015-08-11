@@ -19,11 +19,11 @@ Requirements:
 * Add your ECS credentials to env variabls AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
 * 
 ```
-AWS_ACCESS_KEY_ID=<your access key ID>; AWS_SECRET_ACCESS_KEY=<your secret key>;
-echo $AWS_ACCESS_KEY_ID; echo $AWS_SECRET_ACCESS_KEY
+$ AWS_ACCESS_KEY_ID=<your access key ID>; AWS_SECRET_ACCESS_KEY=<your secret key>;
+$ echo $AWS_ACCESS_KEY_ID; echo $AWS_SECRET_ACCESS_KEY;
 ``` 
 * customize some of the bucket names, object keys and contents  
 * run 
 ``` 
-python ecspytest.py
+$ python ecspytest.py
 ```
