@@ -17,11 +17,7 @@ Go to [ECS TestDrive](https://portal.ecstestdrive.com) to get ECS credentials.
 
 ## Usage
 
-* Add your ECS credentials to env variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
-```
-$ AWS_ACCESS_KEY_ID=<your access key ID>; AWS_SECRET_ACCESS_KEY=<your secret key>;
-$ echo $AWS_ACCESS_KEY_ID; echo $AWS_SECRET_ACCESS_KEY;
-``` 
+* Store your credentials in your [~/.boto](http://boto.readthedocs.org/en/latest/boto_config_tut.html#details)
 * customize some of the bucket names, object keys and contents  
 * run: 
 ``` 

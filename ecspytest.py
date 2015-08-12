@@ -28,18 +28,24 @@ for bucket in conn.get_all_buckets():
                 modified = key.last_modified,
                 )
                 
-#create a new bucket with a new bucket name
-bucket = conn.create_bucket("new_bucket_aug11")
-# or connect to existing bucket:
-# bucket = conn.get_bucket("new_bucket_aug11")
+#create a new bucket with a new bucket name or connect to existing bucket:
+bucket_name = "new_bucket_aug11"
+try:
+	bucket = conn.create_bucket(bucket_name)
+except Exception as e:
+	print "Bucket: \'"+bucket_name+"\' already exists! Opening the existing bucket"
+else:		
+	bucket = conn.get_bucket(bucket_name)
 
+print "Here is the list of buckets:"
 print conn.get_all_buckets()  #show the new bucket
 
 #create a new key and object using arbitrary key and value
 newkey = bucket.new_key("hello_world")  #change this each time
 newkey.set_contents_from_string("Here are the contents of my new object. \n")
 
-#show contents of the new bucket only listing the new object
+#show contents of the bucket
+print "Here is the content of the bucket <"+bucket_name+">:"
 for key in bucket.list():
 	print "{name}\t{size}\t{modified}".format(
              name = key.name,
@@ -48,17 +54,26 @@ for key in bucket.list():
             )
 
 #read in the contents of the object we just added                
+print "The content of the object with key <\'"+newkey.name+"\'> are:"	
 print newkey.get_contents_as_string()
 
 # set the new object's permissions to public readable and generate a public URL with no 
 # expiration limit, without requiring authorization, over standard HTTP (no /S)
+print "Creating a public read-only HTTP URL for the object we just created"
 newkey.set_canned_acl('public-read')
 newkey_url = newkey.generate_url(0, query_auth=False, force_http=True)
 
-# The object will be available here:
-#
-# http://<your namespace ID>.public.ecstestdrive.com/<your bucket name>/hello_world or 
-# http://<your bucket name>.<your namespace ID>.public.ecstestdrive.com/hello_world 
-#
-# $ curl http://<your bucket name>.<your namespace ID>.public.ecstestdrive.com/hello_world
-print "Your URL will be 
+#get the access_key to formulate the URL since it's slightly different on ECS
+## Here are ECS' string formulation rules
+##
+## http://<your namespace ID>.public.ecstestdrive.com/<your bucket name>/hello_world or 
+## http://<your bucket name>.<your namespace ID>.public.ecstestdrive.com/hello_world 
+access_key = boto.config.get_value('Credentials', 'aws_access_key_id')
+arr = access_key.split("@")  # namespace stored in arr[0]
+namespace = arr[0]
+ecs_key_url = "http://"+bucket_name+"."+namespace+".public.ecstestdrive.com/"+newkey.name
+
+print "Try this in your web browser: "+ecs_key_url
+print "Try this in the command line:\n $ curl -v \""+ecs_key_url+"\""
+
+
