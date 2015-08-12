@@ -9,8 +9,6 @@ Requirements:
 ## Installation
 * git clone https://github.com/bradjbarnes/ecspytest.git
 * cd ecspytest
-* virtualenv -p /usr/bin/python2.7 venv
-* source venv/bin/activate
 * pip install < requirements.txt
 
 ## Get Your ECS Test Drive Credentials
@@ -19,7 +17,7 @@ Go to [ECS TestDrive](https://portal.ecstestdrive.com) to get ECS credentials.
 
 ## Usage
 
-* Add your ECS credentials to env variabls AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
+* Add your ECS credentials to env variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
 ```
 $ AWS_ACCESS_KEY_ID=<your access key ID>; AWS_SECRET_ACCESS_KEY=<your secret key>;
 $ echo $AWS_ACCESS_KEY_ID; echo $AWS_SECRET_ACCESS_KEY;

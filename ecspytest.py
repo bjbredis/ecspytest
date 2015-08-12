@@ -8,7 +8,7 @@ host = 'object.ecstestdrive.com'
 conn = boto.connect_s3(host = host)
 
 #conn = boto.connect_s3(
-#        aws_access_key_id = accessKeyId,
+#       aws_access_key_id = accessKeyId,
 #        aws_secret_access_key = secretKey,
 #        host = host,
 #        #is_secure=False,               # uncomment if you are not using ssl
@@ -29,16 +29,18 @@ for bucket in conn.get_all_buckets():
                 )
                 
 #create a new bucket with a new bucket name
-newbucket = conn.create_bucket("new_bucket_aug11")
+bucket = conn.create_bucket("new_bucket_aug11")
+# or connect to existing bucket:
+# bucket = conn.get_bucket("new_bucket_aug11")
 
 print conn.get_all_buckets()  #show the new bucket
 
 #create a new key and object using arbitrary key and value
-newkey = newbucket.new_key("hello_world")
+newkey = bucket.new_key("hello_world")  #change this each time
 newkey.set_contents_from_string("Here are the contents of my new object. \n")
 
 #show contents of the new bucket only listing the new object
-for key in newbucket.list():
+for key in bucket.list():
 	print "{name}\t{size}\t{modified}".format(
              name = key.name,
              size = key.size,
@@ -46,4 +48,17 @@ for key in newbucket.list():
             )
 
 #read in the contents of the object we just added                
-newkey.get_contents_as_string()
+print newkey.get_contents_as_string()
+
+# set the new object's permissions to public readable and generate a public URL with no 
+# expiration limit, without requiring authorization, over standard HTTP (no /S)
+newkey.set_canned_acl('public-read')
+newkey_url = newkey.generate_url(0, query_auth=False, force_http=True)
+
+# The object will be available here:
+#
+# http://<your namespace ID>.public.ecstestdrive.com/<your bucket name>/hello_world or 
+# http://<your bucket name>.<your namespace ID>.public.ecstestdrive.com/hello_world 
+#
+# $ curl http://<your bucket name>.<your namespace ID>.public.ecstestdrive.com/hello_world
+print "Your URL will be 
