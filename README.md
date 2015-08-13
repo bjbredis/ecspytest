@@ -9,7 +9,7 @@ Requirements:
 ## Installation
 * git clone https://github.com/bradjbarnes/ecspytest.git
 * cd ecspytest
-* pip install < requirements.txt
+* Install Boto per instructions at URL above OR 'pip install < requirements.txt'
 
 ## Get Your ECS Test Drive Credentials
 
