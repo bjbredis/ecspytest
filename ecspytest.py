@@ -65,15 +65,26 @@ newkey_url = newkey.generate_url(0, query_auth=False, force_http=True)
 
 #get the access_key to formulate the URL since it's slightly different on ECS
 ## Here are ECS' string formulation rules
-##
 ## http://<your namespace ID>.public.ecstestdrive.com/<your bucket name>/hello_world or 
 ## http://<your bucket name>.<your namespace ID>.public.ecstestdrive.com/hello_world 
 access_key = boto.config.get_value('Credentials', 'aws_access_key_id')
-arr = access_key.split("@")  # namespace stored in arr[0]
-namespace = arr[0]
+arr = access_key.split("@")  # we want what comes before the '@' in the string
+namespace = arr[0]  # namespace stored in arr[0]
 ecs_key_url = "http://"+bucket_name+"."+namespace+".public.ecstestdrive.com/"+newkey.name
 
 print "Try this in your web browser: "+ecs_key_url
-print "Try this in the command line:\n $ curl -v \""+ecs_key_url+"\""
+print "Try this in the command line:\n $ curl -v \""+ecs_key_url+"\"\n"
+
+
+#upload a file from a specific path/filename
+filename = "/Users/barneb5/Desktop/dev/ecspytest/ecspytest.py" 
+print "Uploading file \""+filename+"\" ..."
+filekey = bucket.new_key(filename)
+filesize = filekey.set_contents_from_filename(filename)
+print "Finished uploading "+filesize+" bytes."
+filekey.set_canned_acl('public-read')
+filekey_url = filekey.generate_url(0, query_auth=False, force_http=True)
+ecs_key_url = "http://"+bucket_name+"."+namespace+".public.ecstestdrive.com/"+filekey.name
+print "Try this in your web browser: "+ecs_key_url
 
 
