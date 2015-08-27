@@ -81,7 +81,7 @@ filename = "/Users/barneb5/Desktop/dev/ecspytest/ecspytest.py"
 print "Uploading file \""+filename+"\" ..."
 filekey = bucket.new_key(filename)
 filesize = filekey.set_contents_from_filename(filename)
-print "Finished uploading "+filesize+" bytes."
+print "Finished uploading "+str(filesize)+" bytes."
 filekey.set_canned_acl('public-read')
 filekey_url = filekey.generate_url(0, query_auth=False, force_http=True)
 ecs_key_url = "http://"+bucket_name+"."+namespace+".public.ecstestdrive.com/"+filekey.name
